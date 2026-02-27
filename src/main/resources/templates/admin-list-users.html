@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Users List</title>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<h2>Users</h2>
+
+<a th:href="@{/admin/users/create}">
+    Create new user
+</a>
+
+<br><br>
+
+<a th:href="@{/admin/roles/list}">
+    Roles
+</a>
+
+<table border="1">
+
+    <tr>
+
+        <th>ID</th>
+        <th>Username</th>
+        <th>Year</th>
+        <th>Roles</th>
+        <th>Actions</th>
+
+    </tr>
+
+    <tr th:each="user : ${users}">
+
+        <td th:text="${user.id}"></td>
+
+        <td th:text="${user.username}"></td>
+
+        <td th:text="${user.yearOfBirth}"></td>
+
+        <td>
+
+<span th:each="role : ${user.roles}"
+      th:text="${role.name} + ' '">
+</span>
+
+        </td>
+
+        <td>
+
+            <a th:href="@{/admin/users/edit/{id}(id=${user.id})}">
+                Edit
+            </a>
+
+            <a th:href="@{/admin/users/delete/{id}(id=${user.id})}"
+               onclick="return confirm('Delete user?')">
+                Delete
+            </a>
+
+        </td>
+
+    </tr>
+
+</table>
+
+</body>
+</html>

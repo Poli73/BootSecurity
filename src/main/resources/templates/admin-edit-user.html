@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit User</title>
+</head>
+<body>
+
+<h2>Edit User</h2>
+
+<form th:object="${user}"
+      th:action="@{/admin/users/edit/{id}(id=${user.id})}"
+      method="post">
+
+    Username:
+    <input type="text"
+           th:field="*{username}"
+           required/>
+    <br><br>
+
+    Password:
+    <input type="password"
+           th:field="*{password}"
+           placeholder="Enter new password if you want to change"/>
+    <br><br>
+
+    Year of Birth:
+    <input type="number"
+           th:field="*{yearOfBirth}"
+           required/>
+    <br><br>
+
+    Roles:
+    <select name="roleIds" multiple required>
+        <option th:each="role : ${roles}"
+                th:value="${role.id}"
+                th:text="${role.name}"
+                th:selected="${user.roles.contains(role)}">
+        </option>
+    </select>
+    <br><br>
+
+    <button type="submit">
+        Save
+    </button>
+
+</form>
+
+<br>
+
+<a th:href="@{/admin/users/list}">
+    Back
+</a>
+
+</body>
+</html>
+
