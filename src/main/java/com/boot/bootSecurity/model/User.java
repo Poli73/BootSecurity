@@ -11,6 +11,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.Min;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,14 +35,17 @@ public class User implements UserDetails {
     @Column(name = "username")
     private String username;
 
-    @Min(value = 1900, message = "Year of birth must be later than 1900")
-    @Column(name = "year_of_birth")
-    private int yearOfBirth;
+
+    @NotNull
+    @Min(1900)
+    @Column(name = "year_of_birth", nullable = false)
+    private Integer yearOfBirth;
+
 
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -54,7 +58,7 @@ public class User implements UserDetails {
     }
 
 
-    public User(String username, int yearOfBirth, String password) {
+    public User(String username, Integer yearOfBirth, String password) {
 
         this.username = username;
         this.yearOfBirth = yearOfBirth;
@@ -73,11 +77,11 @@ public class User implements UserDetails {
         this.username = username;
     }
 
-    public int getYearOfBirth() {
+    public Integer getYearOfBirth() {
         return yearOfBirth;
     }
 
-    public void setYearOfBirth(int yearOfBirth) {
+    public void setYearOfBirth(Integer yearOfBirth) {
         this.yearOfBirth = yearOfBirth;
     }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Edit User</title>
 </head>
@@ -12,31 +12,39 @@
       method="post">
 
     Username:
-    <input type="text"
-           th:field="*{username}"
-           required/>
+    <label>
+        <input type="text"
+               th:field="*{username}"
+               required/>
+    </label>
     <br><br>
 
     Password:
-    <input type="password"
-           th:field="*{password}"
-           placeholder="Enter new password if you want to change"/>
+    <label>
+        <input type="password"
+               th:field="*{password}"
+               placeholder="Enter new password if you want to change"/>
+    </label>
     <br><br>
 
     Year of Birth:
-    <input type="number"
-           th:field="*{yearOfBirth}"
-           required/>
+    <label>
+        <input type="number"
+               th:field="*{yearOfBirth}"
+               required/>
+    </label>
     <br><br>
 
     Roles:
-    <select name="roleIds" multiple required>
-        <option th:each="role : ${roles}"
-                th:value="${role.id}"
-                th:text="${role.name}"
-                th:selected="${user.roles.contains(role)}">
-        </option>
-    </select>
+    <label>
+        <select name="roleIds" multiple required>
+            <option th:each="role : ${roles}"
+                    th:value="${role.id}"
+                    th:text="${role.name}"
+                    th:selected="${user.roles.contains(role)}">
+            </option>
+        </select>
+    </label>
     <br><br>
 
     <button type="submit">

@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Edit Role</title>
 </head>
@@ -13,9 +13,11 @@
       method="post">
 
     Name:
-    <input type="text"
-           th:field="*{name}"
-           required/>
+    <label>
+        <input type="text"
+               th:field="*{name}"
+               required/>
+    </label>
 
     <br><br>
 

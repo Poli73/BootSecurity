@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Create User</title>
 </head>
@@ -13,38 +13,46 @@
 
     Username:
 
-    <input type="text"
-           th:field="*{username}"
-           required/>
+    <label>
+        <input type="text"
+               th:field="*{username}"
+               required/>
+    </label>
 
     <br><br>
 
     Password:
 
-    <input type="password"
-           th:field="*{password}"
-           required/>
+    <label>
+        <input type="password"
+               th:field="*{password}"
+               required/>
+    </label>
 
     <br><br>
 
     Year of Birth:
 
-    <input type="number"
-           th:field="*{yearOfBirth}"
-           required/>
+    <label>
+        <input type="number"
+               th:field="*{yearOfBirth}"
+               required/>
+    </label>
 
     <br><br>
 
     Roles:
 
-    <select name="roleIds" multiple required>
+    <label>
+        <select name="roleIds" multiple required>
 
-        <option th:each="role : ${roles}"
-                th:value="${role.id}"
-                th:text="${role.name}">
-        </option>
+            <option th:each="role : ${roles}"
+                    th:value="${role.id}"
+                    th:text="${role.name}">
+            </option>
 
-    </select>
+        </select>
+    </label>
 
     <br><br>
 

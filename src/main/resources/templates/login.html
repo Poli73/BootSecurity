@@ -10,10 +10,14 @@
 <h2>Login</h2>
 <form method="post" th:action="@{/login}">
     <label>Username:</label>
-    <input type="text" name="username"/><br/><br/>
+    <label>
+        <input type="text" name="username"/>
+    </label><br/><br/>
 
     <label>Password:</label>
-    <input type="password" name="password"/><br/><br/>
+    <label>
+        <input type="password" name="password"/>
+    </label><br/><br/>
 
     <button type="submit">Login</button>
 </form>
