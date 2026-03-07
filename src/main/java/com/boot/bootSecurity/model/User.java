@@ -10,6 +10,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -18,6 +20,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+
 
 import java.util.Set;
 
@@ -29,19 +32,26 @@ public class User implements UserDetails {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty(message = "First name must not be empty")
+    @Size(min = 2, max = 25, message = "First name must contain between 2 and 25 characters")
+    @Column(name = "firstName")
+    private String firstName;
 
-    @NotEmpty(message = "Name must not be empty")
-    @Size(min = 2, max = 100, message = "Name must contain between 2 and 25 characters")
-    @Column(name = "username")
-    private String username;
+    @NotEmpty(message = "Last name must not be empty")
+    @Size(min = 2, max = 25, message = "First name must contain between 2 and 25 characters")
+    @Column(name = "lastName")
+    private String lastName;
+    @NotNull(message = "Age must not be empty")
+    @Min(value = 1, message = "Age must be positive")
+    @Max(value = 120, message = "Age must be realistic")
+    private Integer age;
 
-
-    @NotNull
-    @Min(1900)
-    @Column(name = "year_of_birth", nullable = false)
-    private Integer yearOfBirth;
-
-
+    @NotEmpty(message = "Email must not be empty")
+    @Email(message = "Email should be valid")
+    @Column(name = "email", unique = true)
+    private String email;
+    @NotEmpty(message = "Password must not be empty")
+    @Size(min = 5, message = "Password must be at least 5 characters")
     @Column(name = "password")
     private String password;
 
@@ -58,10 +68,11 @@ public class User implements UserDetails {
     }
 
 
-    public User(String username, Integer yearOfBirth, String password) {
-
-        this.username = username;
-        this.yearOfBirth = yearOfBirth;
+    public User(String firstName, String lastName, Integer age, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.email = email;
         this.password = password;
     }
 
@@ -73,28 +84,48 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public Integer getYearOfBirth() {
-        return yearOfBirth;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setYearOfBirth(Integer yearOfBirth) {
-        this.yearOfBirth = yearOfBirth;
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
     public Set<Role> getRoles() {
         return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Override
@@ -109,9 +140,8 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
-
 
     @Override
     public boolean isAccountNonExpired() {
@@ -133,15 +163,16 @@ public class User implements UserDetails {
         return true;
     }
 
-
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
-                ", yearOfBirth=" + yearOfBirth +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", roles=" + roles +
                 '}';
     }
-
 }

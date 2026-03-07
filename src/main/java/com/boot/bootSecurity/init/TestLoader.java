@@ -43,17 +43,22 @@ public class TestLoader {
         roleRepository.save(userRole);
 
         User admin = new User();
-        admin.setUsername("admin");
+        admin.setFirstName("admin");
+        admin.setLastName("admin");
+        admin.setAge(35);
+        admin.setEmail("admin@mail.ru");
         admin.setPassword(passwordEncoder.encode("admin"));
-        admin.setYearOfBirth(1990);
         admin.setRoles(Set.of(adminRole));
 
         userRepository.save(admin);
 
         User user = new User();
-        user.setUsername("user");
+        user.setFirstName("user");
+        user.setLastName("user");
+        user.setAge(30);
+        user.setEmail("user@mail.ru");
         user.setPassword(passwordEncoder.encode("user"));
-        user.setYearOfBirth(1997);
+
         user.setRoles(Set.of(userRole));
 
         userRepository.save(user);

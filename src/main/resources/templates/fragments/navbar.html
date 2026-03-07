@@ -1,8 +1,16 @@
-<nav th:fragment="navbar">
-    <form th:action="@{/logout}" method="post" style="display:inline;">
-        <button type="submit">Logout</button>
-    </form>
-    <div th:if="${param.logout}" style="color: mediumvioletred">
-        You have been logged out.
-    </div>
-</nav>
+<div th:fragment="navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <!-- Левый угол: email + роли -->
+            <span class="navbar-text text-light me-auto">
+                <span th:text="${#authentication.name}"></span>
+                <span> with roles:
+                    <span th:each="role,iterStat : ${#authentication.authorities}">
+                        <span th:text="${role.authority.replace('ROLE_', '')}"></span>
+                        <span th:if="${!iterStat.last}">, </span>
+                    </span>
+                </span>
+            </span>
+        </div>
+    </nav>
+</div>

@@ -25,7 +25,7 @@ public class RoleController {
     @GetMapping("/list")
     public String listRoles(Model model) {
         model.addAttribute("roles", roleService.getAllRoles());
-        return "admin-list-roles"; // имя вашего thymeleaf шаблона
+        return "admin-list-roles";
     }
 
     @GetMapping("/create")

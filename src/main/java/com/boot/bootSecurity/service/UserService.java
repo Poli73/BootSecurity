@@ -29,24 +29,29 @@ public class UserService {
     }
 
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userRepository.findAllWithRoles();
     }
 
     public User getUser(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + id));
     }
 
     public void createUser(User user, List<Long> roleIds) {
+
         user.setRoles(new HashSet<>(roleRepository.findAllById(roleIds)));
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         userRepository.save(user);
     }
 
     public void updateUser(Long id, User updatedUser, List<Long> roleIds) {
         User existingUser = getUser(id);
-        existingUser.setUsername(updatedUser.getUsername());
-        existingUser.setYearOfBirth(updatedUser.getYearOfBirth());
+        existingUser.setFirstName(updatedUser.getFirstName());
+        existingUser.setLastName(updatedUser.getLastName());
+        existingUser.setAge(updatedUser.getAge());
+        existingUser.setEmail(updatedUser.getEmail());
         if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
             existingUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         }
@@ -56,5 +61,10 @@ public class UserService {
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmailWithRoles(email)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + email));
     }
 }
